@@ -1,0 +1,20 @@
+<GuiXml>
+  <Controls>
+    <TopLevelControl name="htHealerHelperIndicator" mouseEnabled="true" movable="true" clampedToScreen="true">
+      <Dimensions x="600" y="50" />
+      
+
+      <OnMoveStop>
+        htHealerHelper.OnIndicatorMoveStop()
+      </OnMoveStop>
+      
+      <Controls>
+        <Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" />
+
+        <Label name="$(parent)T" font="ZoFontAnnounceLarge" color="FFFFFF" inheritAlpha="true" wrapMode="TRUNCATE" verticalAlignment="CENTER" text="Healer Helper" />
+
+      </Controls>
+    </TopLevelControl>
+  </Controls>
+</GuiXml>
+
