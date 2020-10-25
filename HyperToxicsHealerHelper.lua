@@ -222,4 +222,3 @@ function htHealerHelper.ShowInterface(...)
 end
 
 EVENT_MANAGER:RegisterForEvent(htHealerHelper.name, EVENT_ADD_ON_LOADED, htHealerHelper.OnAddOnLoaded);
-
