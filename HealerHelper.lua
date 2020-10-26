@@ -79,13 +79,14 @@ function htHealerHelper.OnPlayerCombatState(event, inCombat)
 		-- The player's state has changed. Update the stored state...
 		htHealerHelper.inCombat = inCombat
 		if inCombat then
+			PD_InCombat()
 			-- entering combat - clear unitTags
 			htHealerHelper.unitTags = {}		
 		else
 			-- exiting combat - clear indicator
 			htHealerHelperIndicatorT:SetColor(255, 255, 255, 255)
 			htHealerHelperIndicatorT:SetText("")
-			PD_HealingNotNeeded()
+			PD_NotInCombat()
 		end
 	end
 end
