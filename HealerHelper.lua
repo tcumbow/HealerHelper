@@ -21,8 +21,7 @@ function htHealerHelper.OnPowerUpdate(eventCode, unitTag, powerIndex, powerType,
 	htHealerHelper.UpdateVolatileUnitInfo(unitTag)
 
 	if unitTag == "player" and powerType == POWERTYPE_MAGICKA then
-		local currentMp, maxMp, effectiveMaxMp = GetUnitPower(unitTag, POWERTYPE_MAGICKA)
-		if (currentMp / maxMp) > .5 then
+		if (powerValue / powerMax) > .5 then
 			PD_MagPlenty()
 		else
 			PD_MagNotPlenty()
