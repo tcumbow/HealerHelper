@@ -17,7 +17,18 @@ end
 
 --integer eventCode, string unitTag, integer powerIndex, integer powerType, integer powerValue, integer powerMax, integer powerEffectiveMax
 function htHealerHelper.OnPowerUpdate(eventCode, unitTag, powerIndex, powerType, powerValue, powerMax, powerEffectiveMax)
+	
 	htHealerHelper.UpdateVolatileUnitInfo(unitTag)
+
+	if unitTag == "player" and powerType == POWERTYPE_MAGICKA then
+		local currentMp, maxMp, effectiveMaxMp = GetUnitPower(unitTag, POWERTYPE_MAGICKA)
+		if (currentMp / maxMp) > .5 then
+			PD_MagPlenty()
+		else
+			PD_MagNotPlenty()
+		end
+	end
+
 end
 
 
@@ -76,7 +87,6 @@ function htHealerHelper.OnPlayerCombatState(event, inCombat)
 			htHealerHelperIndicatorT:SetColor(255, 255, 255, 255)
 			htHealerHelperIndicatorT:SetText("")
 			PD_HealingNotNeeded()
-			PD_MagPlenty()
 		end
 	end
 end
@@ -108,13 +118,6 @@ function htHealerHelper.UpdateIndicator()
 						priorityUnit = unit
 					end
 				end 
-			end
-			if htHealerHelper.playerName == unit.Name then
-				if unit.MagickaPercent > .5 then
-					PD_MagPlenty()
-				else
-					PD_MagNotPlenty()
-				end
 			end
 		end
 		--if we dont have a low health ally nearby select a low health out of range ally.
@@ -209,13 +212,11 @@ function htHealerHelper.UIModeChanged()
 	if (IsReticleHidden()) then
 		htHealerHelperIndicatorBG:SetAlpha(0)
 		htHealerHelperIndicatorT:SetText("")
-		PD_HealingNotNeeded()
-		PD_MagPlenty()
+		PD_InputNotReady()
 	else
 		htHealerHelperIndicatorBG:SetAlpha(0)
 		htHealerHelperIndicatorT:SetText("")
-		PD_HealingNotNeeded()
-		PD_MagPlenty()
+		PD_InputReady()
 	end
 end
 
@@ -226,8 +227,7 @@ function htHealerHelper.HideInterface(eventCode,layerIndex,activeLayerIndex)
     -- We don't want to hide the interface if this is the user pressing the "." key, only if there's an interface displayed
     if (activeLayerIndex == 3) then
 		htHealerHelperIndicator:SetHidden(true)
-		PD_HealingNotNeeded()
-		PD_MagPlenty()
+		PD_InputNotReady()
     end
 end
 
