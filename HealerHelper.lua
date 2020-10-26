@@ -76,6 +76,7 @@ function htHealerHelper.OnPlayerCombatState(event, inCombat)
 			htHealerHelperIndicatorT:SetColor(255, 255, 255, 255)
 			htHealerHelperIndicatorT:SetText("")
 			PD_HealingNotNeeded()
+			PD_MagPlenty()
 		end
 	end
 end
@@ -107,6 +108,13 @@ function htHealerHelper.UpdateIndicator()
 						priorityUnit = unit
 					end
 				end 
+			end
+			if htHealerHelper.playerName == unit.Name then
+				if unit.MagickaPercent > .5 then
+					PD_MagPlenty()
+				else
+					PD_MagNotPlenty()
+				end
 			end
 		end
 		--if we dont have a low health ally nearby select a low health out of range ally.
@@ -153,6 +161,7 @@ function htHealerHelper.UpdateVolatileUnitInfo(unitTag)
 	end
 
 	local currentHp, maxHp, effectiveMaxHp
+	local currentMp, maxMp, effectiveMaxMp
 	local unit = {}
 
 
@@ -160,11 +169,13 @@ function htHealerHelper.UpdateVolatileUnitInfo(unitTag)
 	if htHealerHelper.inCombat and (string.sub(unitTag,1,string.len("group"))=="group" or string.sub(unitTag,1,string.len("player"))=="player") then
 
 		currentHp, maxHp, effectiveMaxHp = GetUnitPower(unitTag, POWERTYPE_HEALTH)
+		currentMp, maxMp, effectiveMaxMp = GetUnitPower(unitTag, POWERTYPE_MAGICKA)
 
 		unit.Name = GetUnitName(unitTag)
 		unit.Dead = IsUnitDead(unitTag)
 		unit.Online = IsUnitOnline(unitTag)
 		unit.HealthPercent = currentHp / maxHp
+		unit.MagickaPercent = currentMp / maxMp
 		unit.LowHealth = unit.HealthPercent <= htHealerHelper.LOW_HEALTH 
 		unit.InSupportRange = IsUnitInGroupSupportRange(unitTag)
 		unit.UnitTag = unitTag
@@ -199,10 +210,12 @@ function htHealerHelper.UIModeChanged()
 		htHealerHelperIndicatorBG:SetAlpha(0)
 		htHealerHelperIndicatorT:SetText("")
 		PD_HealingNotNeeded()
+		PD_MagPlenty()
 	else
 		htHealerHelperIndicatorBG:SetAlpha(0)
 		htHealerHelperIndicatorT:SetText("")
 		PD_HealingNotNeeded()
+		PD_MagPlenty()
 	end
 end
 
@@ -214,6 +227,7 @@ function htHealerHelper.HideInterface(eventCode,layerIndex,activeLayerIndex)
     if (activeLayerIndex == 3) then
 		htHealerHelperIndicator:SetHidden(true)
 		PD_HealingNotNeeded()
+		PD_MagPlenty()
     end
 end
 
