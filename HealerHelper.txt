@@ -1,5 +1,5 @@
 ## Title: Healer Helper
-## APIVersion: 100011
+## APIVersion: 100031 100032
 ## SavedVariables: HealerHelperSavedVariables
 ## Version: 0.2
 ## Author: Tom Cumbow
