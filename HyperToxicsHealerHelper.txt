@@ -1,8 +1,0 @@
-## Title: |c00FF00HyperToxic's Healer Helper|r
-## APIVersion: 100011
-## SavedVariables: HyperToxicHealerHelperSavedVariables
-## Version: 0.2
-## Author: HyperToxic
-
-HyperToxicsHealerHelper.lua
-HyperToxicsHealerHelper.xml

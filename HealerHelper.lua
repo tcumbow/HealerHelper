@@ -1,6 +1,6 @@
 --
 htHealerHelper = {}
-htHealerHelper.name = "HyperToxicsHealerHelper"
+htHealerHelper.name = "HealerHelper"
 htHealerHelper.version = 0.1
 htHealerHelper.unitTags = {}
 htHealerHelper.inCombat = false
@@ -28,8 +28,8 @@ function htHealerHelper:Initialize()
 	EVENT_MANAGER:RegisterForEvent(self.name, EVENT_POWER_UPDATE, htHealerHelper.OnPowerUpdate);
 
 
-	--self.savedVariables = ZO_SavedVars:New("HyperToxicHealerHelperSavedVariables", 1, nil, {})
-	self.savedVariables = ZO_SavedVars:NewAccountWide("HyperToxicHealerHelperSavedVariables", 1, nil, {})
+	--self.savedVariables = ZO_SavedVars:New("HealerHelperSavedVariables", 1, nil, {})
+	self.savedVariables = ZO_SavedVars:NewAccountWide("HealerHelperSavedVariables", 1, nil, {})
 
 	self:RestorePosition()
 
@@ -57,7 +57,7 @@ end
 
 -- Fancy loaded message
 function htHealerHelper.LateInitialize(eventCode, addOnName)
-	d("HyperToxic's Healer Helper loaded...")
+	d("Healer Helper loaded...")
 
 	EVENT_MANAGER:UnregisterForEvent(htHealerHelper.name, EVENT_PLAYER_ACTIVATED);
 end
