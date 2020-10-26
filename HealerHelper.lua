@@ -105,12 +105,23 @@ function htHealerHelper.UpdateIndicator()
 
 	
 	
-	
-	if htHealerHelper.inCombat then
-		
-		--do we have a low health ally nearby
+
+	--do we have a low health ally nearby
+	for i, unit in pairs(htHealerHelper.unitTags) do
+		if unit.Online and (not unit.Dead) and unit.InSupportRange and unit.LowHealth then
+			if not priorityUnit then
+				priorityUnit = unit
+			else
+				if unit.HealthPercent < priorityUnit.HealthPercent then
+					priorityUnit = unit
+				end
+			end 
+		end
+	end
+	--if we dont have a low health ally nearby select a low health out of range ally.
+	if not priorityUnit then
 		for i, unit in pairs(htHealerHelper.unitTags) do
-			if unit.Online and (not unit.Dead) and unit.InSupportRange and unit.LowHealth then
+			if unit.Online and (not unit.Dead) and (not unit.InSupportRange) and unit.LowHealth then
 				if not priorityUnit then
 					priorityUnit = unit
 				else
@@ -120,41 +131,27 @@ function htHealerHelper.UpdateIndicator()
 				end 
 			end
 		end
-		--if we dont have a low health ally nearby select a low health out of range ally.
-		if not priorityUnit then
-			for i, unit in pairs(htHealerHelper.unitTags) do
-				if unit.Online and (not unit.Dead) and (not unit.InSupportRange) and unit.LowHealth then
-					if not priorityUnit then
-						priorityUnit = unit
-					else
-						if unit.HealthPercent < priorityUnit.HealthPercent then
-							priorityUnit = unit
-						end
-					end 
-				end
-			end
-		end 
+	end 
 
-		if priorityUnit then
-			if priorityUnit.InSupportRange then
-				htHealerHelperIndicatorT:SetColor(255, 0, 0, 255)
-				PD_HealingNeeded()
-				if htHealerHelper.playerName == priorityUnit.Name then
-					htHealerHelperIndicatorT:SetText("Heal yourself!")
-				else
-					htHealerHelperIndicatorT:SetText("Heal " .. priorityUnit.Name .. ".")
-				end
+	if priorityUnit then
+		if priorityUnit.InSupportRange then
+			htHealerHelperIndicatorT:SetColor(255, 0, 0, 255)
+			PD_HealingNeeded()
+			if htHealerHelper.playerName == priorityUnit.Name then
+				htHealerHelperIndicatorT:SetText("Heal yourself!")
 			else
-				htHealerHelperIndicatorT:SetColor(255, 255, 0, 255)
-				htHealerHelperIndicatorT:SetText(priorityUnit.Name .. " is out of range.")
-				PD_HealingNotNeeded()
+				htHealerHelperIndicatorT:SetText("Heal " .. priorityUnit.Name .. ".")
 			end
 		else
-			htHealerHelperIndicatorT:SetText("")
+			htHealerHelperIndicatorT:SetColor(255, 255, 0, 255)
+			htHealerHelperIndicatorT:SetText(priorityUnit.Name .. " is out of range.")
 			PD_HealingNotNeeded()
 		end
-		
+	else
+		htHealerHelperIndicatorT:SetText("")
+		PD_HealingNotNeeded()
 	end
+	
 end
 
 function htHealerHelper.UpdateVolatileUnitInfo(unitTag)
@@ -169,7 +166,7 @@ function htHealerHelper.UpdateVolatileUnitInfo(unitTag)
 
 
 
-	if htHealerHelper.inCombat and (string.sub(unitTag,1,string.len("group"))=="group" or string.sub(unitTag,1,string.len("player"))=="player") then
+	if (string.sub(unitTag,1,string.len("group"))=="group" or string.sub(unitTag,1,string.len("player"))=="player") then
 
 		currentHp, maxHp, effectiveMaxHp = GetUnitPower(unitTag, POWERTYPE_HEALTH)
 		currentMp, maxMp, effectiveMaxMp = GetUnitPower(unitTag, POWERTYPE_MAGICKA)
