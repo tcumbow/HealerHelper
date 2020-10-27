@@ -166,7 +166,7 @@ function htHealerHelper.UpdateVolatileUnitInfo(unitTag)
 
 
 
-	if (string.sub(unitTag,1,string.len("group"))=="group" or string.sub(unitTag,1,string.len("player"))=="player") then
+	if (string.sub(unitTag,1,string.len("group"))=="group" or string.sub(unitTag,1,string.len("player"))=="player" or (IsUnitPlayer(unitTag) and IsUnitInGroupSupportRange(unitTag))) then
 
 		currentHp, maxHp, effectiveMaxHp = GetUnitPower(unitTag, POWERTYPE_HEALTH)
 		currentMp, maxMp, effectiveMaxMp = GetUnitPower(unitTag, POWERTYPE_MAGICKA)
