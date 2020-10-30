@@ -5,7 +5,7 @@ htHealerHelper.version = 0.1
 htHealerHelper.unitTags = {}
 htHealerHelper.inCombat = false
 htHealerHelper.playerName = ""
-htHealerHelper.LOW_HEALTH = 0.85
+htHealerHelper.LOW_HEALTH = 0.40
 
 -- Initialize our addon
 function htHealerHelper.OnAddOnLoaded(eventCode, addOnName)
