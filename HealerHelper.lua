@@ -132,7 +132,6 @@ function htHealerHelper.UpdateIndicator()
 	if priorityUnit then
 		if priorityUnit.InSupportRange then
 			htHealerHelperIndicatorT:SetColor(255, 0, 0, 255)
-			PD_HealingNeeded()
 			if htHealerHelper.playerName == priorityUnit.Name then
 				htHealerHelperIndicatorT:SetText("Heal yourself!")
 			else
@@ -141,11 +140,9 @@ function htHealerHelper.UpdateIndicator()
 		else
 			htHealerHelperIndicatorT:SetColor(255, 255, 0, 255)
 			htHealerHelperIndicatorT:SetText(priorityUnit.Name .. " is out of range.")
-			PD_HealingNotNeeded()
 		end
 	else
 		htHealerHelperIndicatorT:SetText("")
-		PD_HealingNotNeeded()
 	end
 	
 end
