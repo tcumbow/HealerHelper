@@ -1,4 +1,6 @@
---
+-- Tom Cumbow forked this from HyperToxic's HealerHelper, which is no longer being maintained
+-- Tom added calls to global functions defined in PixelData
+-- Tom is gradually absorbing some of the HealerHelper functionality into PixelData so that PixelData is no longer dependent on HealerHelper
 htHealerHelper = {}
 htHealerHelper.name = "HealerHelper"
 htHealerHelper.version = 0.1
