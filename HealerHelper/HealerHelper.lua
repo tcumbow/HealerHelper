@@ -1,6 +1,4 @@
 -- Tom Cumbow forked this from HyperToxic's HealerHelper, which is no longer being maintained
--- Tom added calls to global functions defined in PixelData
--- Tom is gradually absorbing some of the HealerHelper functionality into PixelData so that PixelData is no longer dependent on HealerHelper
 htHealerHelper = {}
 htHealerHelper.name = "HealerHelper"
 htHealerHelper.version = 0.1
@@ -21,10 +19,6 @@ end
 function htHealerHelper.OnPowerUpdate(eventCode, unitTag, powerIndex, powerType, powerValue, powerMax, powerEffectiveMax)
 	
 	htHealerHelper.UpdateVolatileUnitInfo(unitTag)
-
-	if unitTag == "player" and powerType == POWERTYPE_MAGICKA then
-		PD_MagickaPercent(powerValue / powerMax)
-	end
 
 end
 
@@ -65,8 +59,6 @@ end
 
 -- Fancy loaded message
 function htHealerHelper.LateInitialize(eventCode, addOnName)
-	d("Healer Helper loaded...")
-
 	EVENT_MANAGER:UnregisterForEvent(htHealerHelper.name, EVENT_PLAYER_ACTIVATED);
 end
 
@@ -77,14 +69,12 @@ function htHealerHelper.OnPlayerCombatState(event, inCombat)
 		-- The player's state has changed. Update the stored state...
 		htHealerHelper.inCombat = inCombat
 		if inCombat then
-			PD_InCombat()
 			-- entering combat - clear unitTags
 			htHealerHelper.unitTags = {}		
 		else
 			-- exiting combat - clear indicator
 			htHealerHelperIndicatorT:SetColor(255, 255, 255, 255)
 			htHealerHelperIndicatorT:SetText("")
-			PD_NotInCombat()
 		end
 	end
 end
@@ -204,11 +194,9 @@ function htHealerHelper.UIModeChanged()
 	if (IsReticleHidden()) then
 		htHealerHelperIndicatorBG:SetAlpha(0)
 		htHealerHelperIndicatorT:SetText("")
-		PD_InputNotReady()
 	else
 		htHealerHelperIndicatorBG:SetAlpha(0)
 		htHealerHelperIndicatorT:SetText("")
-		PD_InputReady()
 	end
 end
 
@@ -219,7 +207,7 @@ function htHealerHelper.HideInterface(eventCode,layerIndex,activeLayerIndex)
     -- We don't want to hide the interface if this is the user pressing the "." key, only if there's an interface displayed
     if (activeLayerIndex == 3) then
 		htHealerHelperIndicator:SetHidden(true)
-		PD_InputNotReady()
+		-- PD_InputNotReady()
     end
 end
 
