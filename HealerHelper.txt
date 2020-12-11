@@ -1,8 +1,0 @@
-## Title: Healer Helper
-## APIVersion: 100032 100032
-## SavedVariables: HealerHelperSavedVariables
-## Version: 0.2
-## Author: Tom Cumbow
-
-HealerHelper.lua
-HealerHelper.xml
